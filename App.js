@@ -8,21 +8,22 @@ import RegisterScreen from './screens/authentication/registerScreen';
 import WelcomeScreen from './screens/authentication/welcomeScreen';
 import AsyncStorage from '@react-native-community/async-storage';
 import GlobalService from './lib/service/globalService';
+import Webservice from './lib/api/webService';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         GlobalService.set('main_navigation', props.navigation);
-        AsyncStorage.getItem('accessToken').then(response => {
+        AsyncStorage.getItem('userData').then(response => {
             if (response !== null) {
-                AsyncStorage.getItem('User').then(response => {
-                    if (response !== '') {
-                        GlobalService.set('User', JSON.parse(response));
+                let userData= JSON.parse(response)
+                Webservice.login(userData.email,userData.password).then(response=>{
+                    if(response.ok){
+                        this.props.navigation.navigate('Auth');
+                    }else{
+                        this.props.navigation.navigate('Login');
                     }
-                });
-                GlobalService.set('accessToken', response);
-                this.props.navigation.navigate('Auth');
-
+                })
             } else {
                 this.props.navigation.navigate('Welcome');
             }
