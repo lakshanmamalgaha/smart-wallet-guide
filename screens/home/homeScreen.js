@@ -26,7 +26,6 @@ export default class HomeScreen extends React.Component {
             income:0,
             expenses:0,
             selectedDate:DateService.convertDateObjectToStringFormat(moment(),"YYYY-MM"),
-            //Months:['Jan',"Feb",'Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
             Months:[0,1,2,3,4,5,6,7,8,9,10,11],
             currentMonth:0,
             currentYear:0
@@ -43,6 +42,19 @@ export default class HomeScreen extends React.Component {
         }).catch(error=>{
             console.log(error)
         })
+    }
+
+    componentDidMount() {
+        this.didFocusListener = this.props.navigation.addListener(
+            'didFocus',
+            () => {
+                this.init();
+            },
+        );
+    }
+
+    componentWillUnmount() {
+        this.didFocusListener.remove();
     }
 
     goLeft = () => {
@@ -184,11 +196,26 @@ export default class HomeScreen extends React.Component {
                 <ScrollView style={{}}>
 
                     <View style={{
+                        marginHorizontal:10,
+                        marginVertical:10,
+                        backgroundColor: '#fff',
+                        padding:10,
+                        borderRadius:5
+                    }}>
+                        <Text style={{
+                            paddingBottom:6,
+                            fontWeight:"bold"
+                        }}>Tip of the day</Text>
+                        <Text>Get Paid What You're Worth and Spend Less Than You Earn.</Text>
+                    </View>
+
+                    <View style={{
                         backgroundColor: '#fff',
                         marginHorizontal: 10,
                         marginVertical: 10,
                         flexDirection: 'row',
                         justifyContent: 'space-between',
+                        borderRadius:5
 
                     }}>
                         <TypeComponent label={'Income'} value={this.state.income} showDivider={true}/>
