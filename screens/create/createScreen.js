@@ -9,6 +9,7 @@ import DateService from '../../lib/service/dateService';
 import moment from 'moment';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Snackbar from '../../lib/component/snackbar';
+import GlobalService from '../../lib/service/globalService';
 export default class CreateScreen extends React.Component {
     constructor(props){
         super(props)
@@ -16,34 +17,34 @@ export default class CreateScreen extends React.Component {
         this.state = {
             resultText: "0",
             showCalculate:true,
-            list:[{
-                label: "Salary",
-                icon:'home'
-            },{
-                label: 'Awards',
-                icon:'trophy-award'
-            },{
-                label: 'Investment',
-                icon:'finance'
-            },{
-                label: 'Refunds',
-                icon:'cash-refund'
-            },{
-                label: 'Other',
-                icon:'cash'
-            }],
+            list:[],
             selectedItem: "",
             selectedIcon:'',
             selectedDate:moment(),
             comment:'',
             isOnOperation:false,
             isDateTimePickerVisible: false,
-
-
-        }
-
+        };
+        this.init();
 
     }
+
+    init=() =>{
+        Webservice.call({
+            name:"api/getByCategory?category="+this.current,
+            method:"GET"
+        }).then(response=>{
+            if(response.ok){
+                console.log(response.data)
+                this.setState({
+                    list:response.data
+                })
+            }
+        }).catch(error=>{
+            console.log(error)
+            this.refs.ReactNativeCodeSnackBar.ShowErrorMessage("Something went wrong");
+        })
+    };
 
     showDateTimePicker = () => {
         this.setState({isDateTimePickerVisible: true});
@@ -72,7 +73,7 @@ export default class CreateScreen extends React.Component {
         }else{
             return false;
         }
-    }
+    };
 
     createTransaction= () => {
         console.log(this.state.selectedItem)
@@ -92,6 +93,7 @@ export default class CreateScreen extends React.Component {
                     comment:this.state.comment,
                     date:this.state.selectedDate,
                     yearMonth: DateService.convertDateObjectToStringFormat(this.state.selectedDate,"YYYY-MM"),
+                    userId: GlobalService.get('User').id,
                     amount:2000
                 }
 
@@ -250,9 +252,9 @@ export default class CreateScreen extends React.Component {
                             selectItem={(item) => {
                             this.handleSelectItem(item)
                         }}
-                            label={listItem.label}
-                            icon={listItem.icon}
-                            isActive={this.state.selectedItem === listItem.label}
+                            label={listItem.name}
+                            icon={listItem.iconName}
+                            isActive={this.state.selectedItem === listItem.name}
                             />
                         ))}
 

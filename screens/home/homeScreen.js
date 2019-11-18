@@ -11,6 +11,7 @@ import Webservice from '../../lib/api/webService';
 import DateService from '../../lib/service/dateService';
 import DateRowComponent from '../../lib/component/dateRowComponet';
 import moment from 'moment';
+import GlobalService from '../../lib/service/globalService';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -35,7 +36,7 @@ export default class HomeScreen extends React.Component {
 
     init = () => {
         Webservice.call({
-            name: 'getAllByMonthYear?filter='+this.state.selectedDate,
+            name: 'getByUserIdAndYearMonth?userId='+GlobalService.get('User').id+'&yearMonth='+this.state.selectedDate,
             method: "GET",
         }).then(response=>{
             this.categorize(response.data)
