@@ -48,7 +48,8 @@ export default class ConverterScreen extends React.Component {
         }];
         return (
             <View style={{
-                flex:1
+                flex:1,
+                backgroundColor:"#ddd"
             }}>
                 <View style={{
                     flexDirection:'row',
