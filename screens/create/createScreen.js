@@ -1,5 +1,5 @@
 import React from 'react';
-import {Keyboard, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Keyboard, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View,Alert} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -27,6 +27,9 @@ export default class CreateScreen extends React.Component {
             isDateTimePickerVisible: false,
         };
         this.init();
+        this.expenses=GlobalService.get('Expenses');
+        this.user= GlobalService.get('User');
+        this.income= GlobalService.get('Income');
 
     }
 
@@ -91,12 +94,16 @@ export default class CreateScreen extends React.Component {
             this.requiredValidator(this.state.resultText) &&
             this.requiredValidator(this.state.selectedDate)
         ) {
+            let category=this.current;
+            if(category==='Savings'){
+                category="Expenses"
+            }
             Webservice.call({
                 name: 'createTransaction',
                 method: 'POST',
                 data: {
                     name: this.state.selectedItem,
-                    category: this.current,
+                    category: category,
                     iconName: this.state.selectedIcon,
                     comment: this.state.comment,
                     date: this.state.selectedDate,
@@ -115,6 +122,8 @@ export default class CreateScreen extends React.Component {
             }).catch(error => {
                 console.log(error);
             });
+        }else{
+            Alert.alert('You must fill all fields.')
         }
 
     };
@@ -144,7 +153,12 @@ export default class CreateScreen extends React.Component {
 
     deleteChar = () => {
         if (this.state.resultText !== '0') {
-            let resultText = this.state.resultText.substring(0, (this.state.resultText.length - 1));
+            let resultText='';
+            if(this.state.resultText.length>1) {
+                let resultText = this.state.resultText.substring(0, (this.state.resultText.length - 1));
+            }else{
+                let resultText='';
+            }
             if (resultText !== '') {
                 this.setState({
                     resultText: resultText,
@@ -212,7 +226,6 @@ export default class CreateScreen extends React.Component {
 
     buttonPressed(text) {
         let operation = this.state.resultText.toString();
-        console.log(operation)
         if(operation.split("").includes("+") || operation.split("").includes("-")){
             this.setState({
                 isOnOperation: true,
@@ -230,7 +243,43 @@ export default class CreateScreen extends React.Component {
     }
 
     handleSelectItem = (item) => {
-        console.log(item);
+        if(this.income>0) {
+            if (item.label === "Food") {
+                if ((this.expenses.food / this.income) >= this.user.food - 2) {
+                    this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Expenses for food is near the limit');
+                }
+            } else if (item.label === "Transportation") {
+                if ((this.expenses.transportation / this.income) >= this.user.transportation - 2) {
+                    this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Expenses for transportation is near the limit');
+                }
+            } else if (item.label === "Health") {
+                if ((this.expenses.health / this.income) >= this.user.health - 2) {
+                    this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Expenses for Health is near the limit');
+                }
+            } else if (item.label === "Rental and bills") {
+                if ((this.expenses.rent / this.income) >= this.user.rent - 2) {
+                    this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Expenses for Rental and bills is near the limit');
+                }
+            } else if (item.label === "Health") {
+                if ((this.expenses.health / this.income) >= this.user.health - 2) {
+                    this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Expenses for transportation is near the limit');
+                }
+            } else if (item.label === "Education") {
+                if ((this.expenses.education / this.income) >= this.user.education - 2) {
+                    this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Expenses for Education is near the limit');
+                }
+            } else if (item.label === "Entertainment") {
+                if ((this.expenses.entertainment / this.income) >= this.user.entertainment - 2) {
+                    this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Expenses for Entertainment is near the limit');
+                }
+            } else if (item.label === "Others") {
+                if ((this.expenses.others / this.income) >= this.user.others - 2) {
+                    this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Expenses for Entertainment is near the limit');
+                }
+            }
+        }else{
+            this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Please add a Income');
+        }
         this.setState({
             selectedItem: item.label,
             selectedIcon: item.icon,
@@ -259,7 +308,7 @@ export default class CreateScreen extends React.Component {
                 <View style={{
                     flexDirection: 'row',
                     zIndex: 1000,
-                    backgroundColor: '#fff',
+                    backgroundColor: '#2cb40e',
                 }}>
                     <TouchableOpacity
                         onPress={this.goBack}
@@ -287,6 +336,7 @@ export default class CreateScreen extends React.Component {
 
                     <View style={{
                         backgroundColor: '#fff',
+                        borderRadius:10
                     }}>
                         {this.state.list.map((listItem, id) => (
                             <ItemComponent

@@ -112,7 +112,7 @@ export default class CategoryScreen extends React.Component {
             }}>
                 <View style={{
                     flexDirection: 'row',
-                    backgroundColor: '#fff',
+                    backgroundColor: '#2cb40e',
                 }}>
                     <TouchableOpacity
                         onPress={this.goBack}

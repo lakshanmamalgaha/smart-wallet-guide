@@ -40,7 +40,7 @@ export default class DetailedViewScreen extends React.Component {
                 <View style={{
                     flexDirection:'row',
                     zIndex:1000,
-                    backgroundColor:'#fff'
+                    backgroundColor:'#2cb40e'
                 }}>
                     <TouchableOpacity
                         onPress={this.goBack}

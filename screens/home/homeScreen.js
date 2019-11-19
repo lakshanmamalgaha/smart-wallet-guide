@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, ScrollView, Text, TouchableOpacity, View,StyleSheet} from 'react-native';
+import {Dimensions, ScrollView, Text, TouchableOpacity, View, StyleSheet, ImageBackground} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
@@ -31,6 +31,9 @@ export default class HomeScreen extends React.Component {
             currentYear:0
         };
         this.init();
+        this.fetchExpensesAndIncome("Expenses");
+        this.fetchExpensesAndIncome("Income");
+        console.log(GlobalService.get('User'))
     }
 
     init = () => {
@@ -43,6 +46,71 @@ export default class HomeScreen extends React.Component {
             console.log(error)
         })
     }
+
+    fetchExpensesAndIncome = (value) =>{
+        Webservice.call({
+            name: 'getAllByUserIdAndYearMonthAndCategory?userId='+GlobalService.get('User').id+'&yearMonth='+this.state.selectedDate+'&category='+value,
+            method: "GET",
+        }).then(response=>{
+            console.log(response)
+            if(response.ok){
+                if(value==="Expenses") {
+                    this.calculateExpense(response.data);
+                }else if(value === "Income"){
+                    this.calculateIncome(response.data);
+                }
+            }
+        }).catch(error=>{
+            console.log(error)
+        })
+    };
+
+    calculateIncome = (data) =>{
+        let income=0;
+        for(let i=0; i<data.length;i++) {
+            income+=data[i].amount;
+        }
+        GlobalService.set("Income",income);
+    };
+
+    calculateExpense = (data)=>{
+        let food=0;
+        let transportation=0;
+        let health=0;
+        let rent =0;
+        let education =0;
+        let entertainment=0;
+        let others=0;
+
+        for(let i=0; i<data.length;i++){
+            if(data[i].name ==='Food'){
+                food+=data[i].amount;
+            }else if(data[i].name === 'Transportation'){
+                transportation+=data[i].amount;
+            }else if(data[i].name === 'Health'){
+                health+=data[i].amount;
+            }else if(data[i].name === 'Rental and bills'){
+                rent+=data[i].amount;
+            }else if(data[i].name === 'Education'){
+                education+=data[i].amount;
+            }else if(data[i].name === 'Entertainment'){
+                entertainment+=data[i].amount;
+            }else if(data[i].name === 'Others'){
+                others+=data[i].amount;
+            }
+        }
+        let obj={
+            food:food,
+            transportation:transportation,
+            health:health,
+            rent:rent,
+            education:education,
+            entertainment:entertainment,
+            others:others
+        }
+        console.log(obj)
+        GlobalService.set('Expenses',obj);
+    };
 
     componentDidMount() {
         this.didFocusListener = this.props.navigation.addListener(
@@ -159,7 +227,7 @@ export default class HomeScreen extends React.Component {
                     style={{
                         flexDirection: 'row',
                         zIndex: 10,
-                        backgroundColor: '#fff',
+                        backgroundColor: '#2cb40e',
                     }}>
                     <TouchableOpacity
                         style={{
@@ -192,13 +260,15 @@ export default class HomeScreen extends React.Component {
                         </View>
                     </TouchableOpacity>
                 </View>
-
+                <View style={{flex:1}}>
+                    <ImageBackground source={require('../../assets/Home.jpg')}
+                                     style={{width: "100%", height: "100%"}}>
                 <ScrollView style={{}}>
 
                     <View style={{
                         marginHorizontal:10,
                         marginVertical:10,
-                        backgroundColor: '#fff',
+                        backgroundColor: '#ddd',
                         padding:10,
                         borderRadius:5
                     }}>
@@ -210,7 +280,7 @@ export default class HomeScreen extends React.Component {
                     </View>
 
                     <View style={{
-                        backgroundColor: '#fff',
+                        backgroundColor: '#ddd',
                         marginHorizontal: 10,
                         marginVertical: 10,
                         flexDirection: 'row',
@@ -318,9 +388,12 @@ export default class HomeScreen extends React.Component {
                     </ActionButton.Item>
 
                 </ActionButton>
+                    </ImageBackground>
+                </View>
             </View>
         );
     }
+
 }
 const styles = StyleSheet.create({
     container: {

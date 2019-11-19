@@ -54,7 +54,7 @@ export default class ConverterScreen extends React.Component {
                 <View style={{
                     flexDirection:'row',
                     zIndex:1000,
-                    backgroundColor:'#fff'
+                    backgroundColor:'#2cb40e'
                 }}>
                     <TouchableOpacity
                         onPress={this.goBack}
@@ -74,6 +74,9 @@ export default class ConverterScreen extends React.Component {
                 <View style={{
                     paddingHorizontal:10,
                     paddingVertical:10,
+                    backgroundColor:"#fff",
+                    margin:10,
+                    borderRadius:10,
                 }}>
                     <View style={{
                         paddingVertical:10,
@@ -117,7 +120,8 @@ export default class ConverterScreen extends React.Component {
                             paddingVertical:10,
                             justifyContent:'center',
                             alignItems:'center',
-                            backgroundColor:'red'
+                            backgroundColor:'#a9a9a9',
+                                borderRadius:10,
                         }}>
                             <Text>Convert</Text>
                         </TouchableOpacity>

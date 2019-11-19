@@ -39,7 +39,7 @@ export default class AddEventScreen extends React.Component {
                 <View style={{
                     flexDirection: 'row',
                     zIndex: 1000,
-                    backgroundColor: '#fff',
+                    backgroundColor: '#2cb40e',
                     justifyContent:'space-between'
                 }}>
                     <View style={{flexDirection:'row'}}>
