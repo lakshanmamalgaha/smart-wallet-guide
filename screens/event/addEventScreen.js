@@ -89,7 +89,7 @@ export default class AddEventScreen extends React.Component {
                                 autoCorrect={false}
                                 enablesReturnKeyAutomatically={true}
                                 onChangeText={name => this.setState({name})}
-                                label='Category Name'
+                                label='Event Name'
                             />
                         </View>
                         </View>
