@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActivityIndicator, Text, View} from 'react-native';
+import {ActivityIndicator, Text, View,ImageBackground} from 'react-native';
 import DrawerNavigator from './lib/navigation/drawerNavigator';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -32,11 +32,14 @@ class App extends React.Component {
 
     render() {
         return (
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', alignContent: 'center'}}>
-                <Text style={{
-                    fontSize: 20,
-                }}>Smart Wallet Guide</Text>
-                <ActivityIndicator size="large" color="red"/>
+            <View style={{flex: 1}}>
+                <ImageBackground source={require('./assets/Splash.jpg')} style={{width: "100%", height: "100%"}}>
+                    <View style={{
+                        flex:1,justifyContent: 'center', alignItems: 'center', alignContent: 'center'
+                    }}>
+                    <ActivityIndicator size="large" color="#000"/>
+                    </View>
+                </ImageBackground>
             </View>
         );
     }

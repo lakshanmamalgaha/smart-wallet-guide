@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,Text,TouchableOpacity,Alert} from 'react-native';
+import {View, Text, TouchableOpacity, Alert, ImageBackground} from 'react-native';
 import {TextField} from 'react-native-material-textfield';
 import Webservice from '../../lib/api/webService';
 
@@ -38,13 +38,22 @@ export default class LoginScreen extends React.Component{
         }
     }
 
+    goToRegister = () =>{
+        this.props.navigation.navigate("Register");
+    }
+
     render(){
         return(
             <View style={{
                 flex:1,
-                justifyContent:'center',
-                backgroundColor:'#ddd'
             }}>
+                <ImageBackground source={require('../../assets/Hometest.jpg')}
+                                 style={{width: "100%", height: "100%"}}>
+                    <View style={{
+                    flex:1,
+                        justifyContent:'center',
+                    }
+                    }>
                 <Text style={{
                     textAlign:'center',
                     fontSize:16,
@@ -104,6 +113,17 @@ export default class LoginScreen extends React.Component{
                         </TouchableOpacity>
                     </View>
                 </View>
+                        <TouchableOpacity onPress={this.goToRegister} style={{
+                            justifyContent:'center',
+                            alignItems:'center',
+                            paddingVertical:20,
+                        }}>
+                            <Text style={{
+                                fontWeight:'bold'
+                            }}>New to Smart Wallet Guide? Sign In</Text>
+                        </TouchableOpacity>
+                </View>
+                </ImageBackground>
             </View>
         )
     }
