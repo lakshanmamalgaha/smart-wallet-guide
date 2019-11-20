@@ -12,6 +12,7 @@ import DateService from '../../lib/service/dateService';
 import DateRowComponent from '../../lib/component/dateRowComponet';
 import moment from 'moment';
 import GlobalService from '../../lib/service/globalService';
+import firebase from 'react-native-firebase';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -63,6 +64,33 @@ export default class HomeScreen extends React.Component {
         }).catch(error=>{
             console.log(error)
         })
+    };
+
+    createNotificationChannel = () => {
+        const channel = new firebase.notifications.Android.Channel(
+            'reminder',
+            'Reminders Channel',
+            firebase.notifications.Android.Importance.High
+        ).setDescription('Used for getting reminder notification');
+
+        firebase.notifications().android.createChannel(channel);
+    };
+
+    checkPermission = async () => {
+        const enabled = await firebase.messaging().hasPermission();
+        if (enabled) {
+            this.notificationListener = firebase.notifications().onNotification(async notification => {
+                await firebase.notifications().displayNotification(notification);
+            });
+        } else {
+            try {
+                await firebase.messaging().requestPermission();
+            } catch (error) {
+                Alert.alert(
+                    'Unable to access the Notification permission. Please enable the Notification Permission from the settings'
+                );
+            }
+        }
     };
 
     calculateIncome = (data) =>{
@@ -119,6 +147,8 @@ export default class HomeScreen extends React.Component {
                 this.init();
             },
         );
+        this.createNotificationChannel();
+        this.checkPermission();
     }
 
     componentWillUnmount() {
