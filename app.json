@@ -1,5 +1,0 @@
-{
-  "name": "Smart Wallet Guide",
-  "displayName": "Smart Wallet Guide",
-  "packagerOpts": { "config": "metro.config.js", "sourceExts": [ "js","jsx","svg","ts","tsx"] }
-}
