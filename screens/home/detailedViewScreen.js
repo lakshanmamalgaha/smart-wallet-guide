@@ -3,16 +3,45 @@ import {Text, TouchableOpacity, View,ScrollView} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import DateService from '../../lib/service/dateService';
+import Webservice from "../../lib/api/webService";
+import GlobalService from "../../lib/service/globalService";
 
 export default class DetailedViewScreen extends React.Component {
     constructor(props){
         super(props)
         this.item = this.props.navigation.state.params.item;
+        console.log(this.item.iconName)
+        this.init();
+    }
+
+    init=()=>{
+        if(this.item.iconName==="calendar"){
+            Webservice.call({
+                name:"getEvents?userId="+GlobalService.get('User').id,
+                method:"GET"
+            }).then(response=>{
+                console.log(response)
+            })
+
+        }
     }
 
     goBack= () => {
         this.props.navigation.goBack();
     };
+
+    delete = () =>{
+        Webservice.call({
+            name:"deleteAll?id="+this.item.id+"&userId="+this.item.userId,
+            method:"GET"
+        }).then(response=>{
+            console.log(response)
+            this.props.navigation.navigate("Home")
+        }).catch(error=>{
+            console.log(error)
+            this.props.navigation.navigate("Home")
+        })
+    }
 
     renderRow(label,value){
         return(
@@ -39,9 +68,13 @@ export default class DetailedViewScreen extends React.Component {
             }}>
                 <View style={{
                     flexDirection:'row',
+                    justifyContent:'space-between',
                     zIndex:1000,
                     backgroundColor:'#2cb40e'
                 }}>
+                    <View style={{
+                    flexDirection:"row"
+                    }}>
                     <TouchableOpacity
                         onPress={this.goBack}
                         style={{
@@ -56,6 +89,13 @@ export default class DetailedViewScreen extends React.Component {
                     }}>
                         Details
                     </Text>
+                    </View>
+                    <TouchableOpacity onPress={this.delete} style={{
+                        marginVertical:6,
+                        marginHorizontal:10,
+                    }}>
+                    <MaterialIcons name={'delete'} color={'#000'} size={30}/>
+                </TouchableOpacity>
                 </View>
                 <ScrollView style={{
                     backgroundColor:"#dddddd"
@@ -89,7 +129,17 @@ export default class DetailedViewScreen extends React.Component {
                         {this.renderRow('Category',this.item.category)}
                         {this.renderRow("Amount",this.item.amount)}
                         {this.renderRow("Date",DateService.convertDateObjectToStringFormat(this.item.date,'ddd, MMM DD YYYY'))}
-                        {this.renderRow("Note",this.item.comment)}
+                        {this.item.iconName !== 'calendar'? this.renderRow("Note",this.item.comment):
+                            <View style={{
+                                paddingTop:20,
+                            }}
+                            >
+                                <Text style={{
+                                    textAlign:'center',
+                                    fontWeight:'bold'
+                                }}>Event Details</Text>
+                            </View>
+                        }
                     </View>
 
                 </ScrollView>

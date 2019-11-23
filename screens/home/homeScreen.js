@@ -1,5 +1,5 @@
 import React from 'react';
-import {Dimensions, ScrollView, Text, TouchableOpacity, View, StyleSheet, ImageBackground} from 'react-native';
+import {Dimensions, ScrollView, Text, TouchableOpacity, View, StyleSheet, ImageBackground, Alert} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal';
@@ -34,7 +34,6 @@ export default class HomeScreen extends React.Component {
         this.init();
         this.fetchExpensesAndIncome("Expenses");
         this.fetchExpensesAndIncome("Income");
-        console.log(GlobalService.get('User'))
     }
 
     init = () => {
@@ -48,12 +47,28 @@ export default class HomeScreen extends React.Component {
         })
     }
 
+    checkBalacnce= ()=>{
+        Alert.alert(
+            'Your Balance is low',
+            'Use Location To Find near by atms',
+            [
+                {text: 'Ask me later', onPress: () => {}},
+                {
+                    text: 'Cancel',
+                    onPress: () => {},
+                    style: 'cancel',
+                },
+                {text: 'Go TO Locations', onPress: () => {this.props.navigation.navigate("Location")}},
+            ],
+            {cancelable: false},
+        )
+    }
+
     fetchExpensesAndIncome = (value) =>{
         Webservice.call({
             name: 'getAllByUserIdAndYearMonthAndCategory?userId='+GlobalService.get('User').id+'&yearMonth='+this.state.selectedDate+'&category='+value,
             method: "GET",
         }).then(response=>{
-            console.log(response)
             if(response.ok){
                 if(value==="Expenses") {
                     this.calculateExpense(response.data);
@@ -136,7 +151,6 @@ export default class HomeScreen extends React.Component {
             entertainment:entertainment,
             others:others
         }
-        console.log(obj)
         GlobalService.set('Expenses',obj);
     };
 
@@ -215,6 +229,9 @@ export default class HomeScreen extends React.Component {
                 listData[day]=dayData;
             }
 
+        }
+        if((income-expenses)<1000){
+            this.checkBalacnce();
         }
         this.setState({
             days:days,

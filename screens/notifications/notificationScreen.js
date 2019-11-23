@@ -29,10 +29,10 @@ export default class NotificationScreen extends Component {
     }
 
     init = () => {
-        AsyncStorage.getItem('userData').then(response => {
+        AsyncStorage.getItem('Time').then(response => {
             if (response !== null) {
                 this.setState({
-                    notificationTime: moment(response),
+                    notificationTime: moment(JSON.parse(response)),
                 })
             }})
     }
@@ -56,7 +56,7 @@ export default class NotificationScreen extends Component {
         const notification = new firebase.notifications.Notification()
             .setNotificationId('1')
             .setTitle(title)
-            .setBody('')
+            .setBody('Add Your Expenses and Income')
             .android.setPriority(firebase.notifications.Android.Priority.High)
             .android.setChannelId('reminder')
             .android.setAutoCancel(true);
@@ -80,8 +80,7 @@ export default class NotificationScreen extends Component {
 
     handleDatePicked = date => {
         this.hideDateTimePicker();
-        AsyncStorage.setItem("Time",date).then(response=>{
-            console.log(response)
+        AsyncStorage.setItem("Time",JSON.stringify(date)).then(response=>{
         });
         this.setState({
             notificationTime: moment(date),

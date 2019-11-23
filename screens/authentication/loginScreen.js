@@ -74,7 +74,7 @@ export default class LoginScreen extends React.Component{
                             autoCorrect={false}
                             enablesReturnKeyAutomatically={true}
                             onChangeText={email => this.setState({email})}
-                            label='Email'
+                            label='Username'
                             keyboardType={'email-address'}
                         />
                     </View>

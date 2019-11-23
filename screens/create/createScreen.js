@@ -245,40 +245,40 @@ export default class CreateScreen extends React.Component {
     handleSelectItem = (item) => {
         if(this.income>0) {
             if (item.label === "Food") {
-                if ((this.expenses.food / this.income) >= this.user.food - 2) {
-                    this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Expenses for food is near the limit');
+                if ((this.expenses.food / this.income) > this.user.food - 5) {
+                    Alert.alert('Expenses for food is near the limit');
                 }
             } else if (item.label === "Transportation") {
-                if ((this.expenses.transportation / this.income) >= this.user.transportation - 2) {
-                    this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Expenses for transportation is near the limit');
+                if ((this.expenses.transportation / this.income) > this.user.transportation - 5) {
+                    Alert.alert('Expenses for transportation is near the limit');
                 }
             } else if (item.label === "Health") {
-                if ((this.expenses.health / this.income) >= this.user.health - 2) {
-                    this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Expenses for Health is near the limit');
+                if ((this.expenses.health / this.income) >= this.user.health - 5) {
+                    Alert.alert('Expenses for Health is near the limit');
                 }
             } else if (item.label === "Rental and bills") {
-                if ((this.expenses.rent / this.income) >= this.user.rent - 2) {
-                    this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Expenses for Rental and bills is near the limit');
+                if ((this.expenses.rent / this.income) >= this.user.rent - 5) {
+                    Alert.alert('Expenses for Rental and bills is near the limit');
                 }
             } else if (item.label === "Health") {
-                if ((this.expenses.health / this.income) >= this.user.health - 2) {
-                    this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Expenses for transportation is near the limit');
+                if ((this.expenses.health / this.income) >= this.user.health - 5) {
+                   Alert.alert('Expenses for transportation is near the limit');
                 }
             } else if (item.label === "Education") {
-                if ((this.expenses.education / this.income) >= this.user.education - 2) {
-                    this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Expenses for Education is near the limit');
+                if ((this.expenses.education / this.income) >= this.user.education - 5) {
+                    Alert.alert('Expenses for Education is near the limit');
                 }
             } else if (item.label === "Entertainment") {
-                if ((this.expenses.entertainment / this.income) >= this.user.entertainment - 2) {
-                    this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Expenses for Entertainment is near the limit');
+                if ((this.expenses.entertainment / this.income) >= this.user.entertainment - 5) {
+                    Alert.alert('Expenses for Entertainment is near the limit');
                 }
             } else if (item.label === "Others") {
-                if ((this.expenses.others / this.income) >= this.user.others - 2) {
-                    this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Expenses for Entertainment is near the limit');
+                if ((this.expenses.others / this.income) >= this.user.others - 5) {
+                    Alert.alert('Expenses for Entertainment is near the limit');
                 }
             }
         }else{
-            this.refs.ReactNativeCodeSnackBar.ShowWarningMessage('Please add a Income');
+            Alert.alert('Please add a Income');
         }
         this.setState({
             selectedItem: item.label,

@@ -22,6 +22,8 @@ export default class RegisterScreen extends React.Component{
         }
     }
 
+
+
     signUp = () => {
         if(this.requiredValidator(this.state.email) && this.requiredValidator(this.state.password)
         && this.requiredValidator(this.state.passwordAgain)
@@ -125,25 +127,11 @@ export default class RegisterScreen extends React.Component{
                                         autoCorrect={false}
                                         enablesReturnKeyAutomatically={true}
                                         onChangeText={email => this.setState({email})}
-                                        label='Email'
+                                        label='Username'
                                         keyboardType={'email-address'}
                                     />
                                 </View>
 
-                                <View style={{
-                                    paddingVertical: 10,
-                                }}>
-                                    <TextField
-                                        style={{
-                                            fontSize: 18
-                                        }}
-                                        value={this.state.occupation}
-                                        autoCorrect={false}
-                                        enablesReturnKeyAutomatically={true}
-                                        onChangeText={occupation => this.setState({occupation})}
-                                        label='Occupation'
-                                    />
-                                </View>
 
                                 <View style={{
                                     paddingVertical: 10,
@@ -217,6 +205,7 @@ export default class RegisterScreen extends React.Component{
                                         width:'40%',
                                         paddingVertical:0
                                     }}
+                                               placeholder={"%"}
                                                value={this.state.food}
                                                onChangeText={food => this.setState({food})}
                                                keyboardType={'number-pad'}
@@ -236,6 +225,7 @@ export default class RegisterScreen extends React.Component{
                                         width:'40%',
                                         paddingVertical:0
                                     }}
+                                               placeholder={"%"}
                                                value={this.state.transportation}
                                                onChangeText={transportation => this.setState({transportation})}
                                     keyboardType={'number-pad'}
@@ -255,9 +245,12 @@ export default class RegisterScreen extends React.Component{
                                         width:'40%',
                                         paddingVertical:0
                                     }}
+
+                                               placeholder={"%"}
                                                value={this.state.health}
                                                onChangeText={health => this.setState({health})}
                                                keyboardType={'number-pad'} />
+
                                 </View>
                                 <View style={{
                                     flexDirection: 'row',
@@ -273,6 +266,7 @@ export default class RegisterScreen extends React.Component{
                                         width:'40%',
                                         paddingVertical:0
                                     }}
+                                               placeholder={"%"}
                                                value={this.state.rent}
                                                onChangeText={rent => this.setState({rent})}
                                                keyboardType={'number-pad'}
@@ -292,6 +286,7 @@ export default class RegisterScreen extends React.Component{
                                         width:'40%',
                                         paddingVertical:0
                                     }}
+                                               placeholder={"%"}
                                                value={this.state.education}
                                                onChangeText={education => this.setState({education})}
                                                keyboardType={'number-pad'}
@@ -311,6 +306,7 @@ export default class RegisterScreen extends React.Component{
                                         width:'40%',
                                         paddingVertical:0
                                     }}
+                                               placeholder={"%"}
                                                value={this.state.entertainment}
                                                onChangeText={ entertainment=> this.setState({entertainment})}
                                                keyboardType={'number-pad'}
@@ -330,6 +326,7 @@ export default class RegisterScreen extends React.Component{
                                         width:'40%',
                                         paddingVertical:0
                                     }}
+                                               placeholder={"%"}
                                                value={this.state.others}
                                                onChangeText={others => this.setState({others})}
                                                keyboardType={'number-pad'}

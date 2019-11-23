@@ -4,6 +4,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Dropdown } from 'react-native-material-dropdown';
 import { TextField } from 'react-native-material-textfield';
 
+
 export default class ConverterScreen extends React.Component {
     constructor(props){
         super(props)
@@ -46,6 +47,7 @@ export default class ConverterScreen extends React.Component {
         }, {
             value: 'INR',
         }];
+
         return (
             <View style={{
                 flex:1,
