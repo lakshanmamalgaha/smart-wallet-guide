@@ -248,31 +248,31 @@ export default class CreateScreen extends React.Component {
             if (item.label === "Food") {
                 console.log(this.expenses.food / this.income)
                 if (((this.expenses.food / this.income)*100) > this.user.food - 2) {
-                    Alert.alert('Expenses for food is near the limit.');
+                    Alert.alert('Warning! Your limit has exceed.');
                 }
             } else if (item.label === "Transportation") {
                 if (((this.expenses.transportation / this.income)*100) > this.user.transportation - 2) {
-                    Alert.alert('Expenses for transportation is near the limit');
+                    Alert.alert('Warning! Your limit has exceed.');
                 }
             } else if (item.label === "Health") {
                 if (((this.expenses.health / this.income)*100) >= this.user.health - 2) {
-                    Alert.alert('Expenses for Health is near the limit');
+                    Alert.alert('Warning! Your limit has exceed.');
                 }
             } else if (item.label === "Rental and bills") {
                 if (((this.expenses.rent / this.income)*100) >= this.user.rent - 2) {
-                    Alert.alert('Expenses for Rental and bills is near the limit');
+                    Alert.alert('Warning! Your limit has exceed.');
                 }
             }  else if (item.label === "Education") {
                 if (((this.expenses.education / this.income)*100) >= this.user.education - 2) {
-                    Alert.alert('Expenses for Education is near the limit');
+                    Alert.alert('Warning! Your limit has exceed.');
                 }
             } else if (item.label === "Entertainment") {
                 if (((this.expenses.entertainment / this.income)*100) >= this.user.entertainment - 2) {
-                    Alert.alert('Expenses for Entertainment is near the limit');
+                    Alert.alert('Warning! Your limit has exceed.');
                 }
             } else if (item.label === "Others") {
                 if (((this.expenses.others / this.income) *100)>= this.user.others - 2) {
-                    Alert.alert('Expenses for Entertainment is near the limit');
+                    Alert.alert('Warning! Your limit has exceed.');
                 }
             }
         }
