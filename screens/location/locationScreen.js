@@ -35,7 +35,7 @@ export default class LocationScreen extends React.Component{
 
     fetchLocations = ()=>{
         let url='https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+this.state.latitude
-            +','+this.state.longitude+'&radius=500&types=atm&key=AIzaSyD4cFsnCizXU1qHfKqPjcBvCbckndb-DlY';
+            +','+this.state.longitude+'&radius=500&types=atm&key=API_KEY';
         fetch(url).then((response) => response.json().then(responseData => {
 
             let near=[];
