@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "51940066321",
+    "firebase_url": "https://smart-wallet-guide-49c8a.firebaseio.com",
+    "project_id": "smart-wallet-guide-49c8a",
+    "storage_bucket": "smart-wallet-guide-49c8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51940066321:android:07e8306455efa8eade5db0",
+        "android_client_info": {
+          "package_name": "com.smart.wallet.guide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "51940066321-i0hbgfrajriktp8qipv9gu693o7fkj8u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyWMpucOuEhQhYPJ6r0kNWsKvHz1L7kwU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "51940066321-i0hbgfrajriktp8qipv9gu693o7fkj8u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
